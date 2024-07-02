@@ -1,0 +1,9 @@
+.custom-banner {
+    background: url("/src/Assets/Images/banner.png") center center no-repeat;
+    background-size: cover;
+    width: 100vw; /* Use 100vw para garantir que ocupa 100% da viewport */
+    height: 65vh;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
