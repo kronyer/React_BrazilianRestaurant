@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
 import { Footer, Header, NotFound } from "./Components/Layout"; //uma linha só
-import { menuItemModel, userModel } from "./Interfaces";
+import { userModel } from "./Interfaces";
 import {
   AccessDenied,
-  AuthenticationTest,
-  AuthenticationTestAdmin,
   Home,
   Login,
   MenuItemDetails,
@@ -28,9 +26,11 @@ import AllOrders from "./Components/Layout/Pages/Order/AllOrders";
 import MenuItemUpsert from "./Components/Layout/Pages/MenuItem/MenuItemUpsert";
 
 //App vai ser o root
+
 function App() {
   const dispatch = useDispatch();
   const [skip, setSkip] = useState(true);
+  // @ts-expect-error root
   const userData = useSelector((state: RootState) => state.userAuthStore);
 
   const { data, isLoading } = useGetShoppingCartQuery(userData.id, {

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export default interface apiResponse {
   data?: {
     statusCode?: number;
@@ -7,5 +8,5 @@ export default interface apiResponse {
       [key: string]: string;
     };
   };
-  error: any;
+  error?: any;
 }

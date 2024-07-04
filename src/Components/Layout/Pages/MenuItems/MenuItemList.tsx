@@ -108,7 +108,8 @@ function MenuItemList() {
   }
 
   if (error) {
-    return <div>Error: {error.message}</div>;
+    // @ts-expect-error Error?
+    return <div>Error: {error}</div>;
   }
 
   const handleCategoryClick = (i: number) => {

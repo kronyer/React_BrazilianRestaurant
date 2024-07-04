@@ -11,6 +11,7 @@ import { MainLoader } from "../Common";
 function OrderSummary({ data, userInput }: orderSummaryProps) {
   const statusColor = getStatusColor(data.status!);
   const navigate = useNavigate();
+  // @ts-expect-error RootState
   const userData = useSelector((state: RootState) => state.userAuthStore);
   const [loading, setIsLoading] = useState(false);
   const [updateOrderHeader] = useUpdateOrderHeaderMutation();

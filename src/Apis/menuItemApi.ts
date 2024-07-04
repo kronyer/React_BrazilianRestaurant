@@ -1,11 +1,10 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { menuItemModel } from "../Interfaces";
 
 const menuItemApi = createApi({
   reducerPath: "menuItemApi",
   baseQuery: fetchBaseQuery({
     baseUrl: "https://redmangoapi.azurewebsites.net/api/",
-    prepareHeaders: (headers: Headers, api) => {
+    prepareHeaders: (headers: Headers) => {
       const token = localStorage.getItem("token");
       token && headers.append("Authorization", "Bearer " + token);
     },

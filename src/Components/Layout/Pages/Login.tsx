@@ -1,9 +1,6 @@
 import React, { useState } from "react";
 import { inputHelper } from "../../../Helper";
-import {
-  useLoginUserMutation,
-  useRegisterUserMutation,
-} from "../../../Apis/authApi";
+import { useLoginUserMutation } from "../../../Apis/authApi";
 import { apiResponse, userModel } from "../../../Interfaces";
 import { jwtDecode } from "jwt-decode";
 import { useDispatch } from "react-redux";

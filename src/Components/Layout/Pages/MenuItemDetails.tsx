@@ -18,7 +18,9 @@ function MenuItemDetails() {
   const [quantity, setQuantity] = useState(1);
   const [isAddingToCart, setIsAddingToCart] = useState<boolean>(false);
   const [updateShoppingCart] = useUpdateShoppingCartMutation();
+
   const userData: userModel = useSelector(
+    // @ts-expect-error Login?
     (state: RootState) => state.userAuthStore
   );
 

@@ -1,4 +1,3 @@
 import store from "./Redux/store";
 
-
-export {store}
+export { store };
