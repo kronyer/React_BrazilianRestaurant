@@ -1,18 +1,34 @@
-import React from "react";
+import React, { useEffect } from "react";
 import logo from "../../assets/Images/logo.png";
-import { Link, NavLink } from "react-router-dom";
-import { cartItemModel } from "../../Interfaces";
-import { useSelector } from "react-redux";
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import { cartItemModel, userModel } from "../../Interfaces";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../Storage/Redux/store";
+import {
+  setLoggedInUser,
+  userEmptyState,
+} from "../../Storage/Redux/userAuthSlice";
 
 function Header() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const shoppingCartFromStore: cartItemModel[] = useSelector(
     (state: RootState) => state.shoppingCartStore.cartItems ?? []
   );
 
+  const userData: userModel = useSelector(
+    (state: RootState) => state.userAuthStore
+  );
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    dispatch(setLoggedInUser({ ...userEmptyState }));
+    window.location.reload();
+  };
+
   return (
     <nav
-      className="navbar navbar-expand-lg bg-body-tertiary"
+      className="navbar navbar-expand-lg bg-body-tertiary d-flex align-items-center"
       data-bs-theme="white"
       style={{
         backgroundColor: "whitesmoke",
@@ -41,101 +57,124 @@ function Header() {
                 Home
               </NavLink>
             </li>
-            <li className="nav-item"></li>
-            {/* <li className="nav-item">
-          <a className="nav-link" href="#">Features</a>
-        </li>
-        <li className="nav-item">
-          <a className="nav-link" href="#">Pricing</a>
-        </li> */}
-            <li className="nav-item dropdown">
-              <a
-                className="nav-link dropdown-toggle"
-                href="#"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
+            {userData.role === "admin" ? (
+              <li className="nav-item dropdown">
+                <a
+                  className="nav-link dropdown-toggle"
+                  href="#"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  Admin
+                </a>
+                <ul className="dropdown-menu">
+                  <li>
+                    <a
+                      className="dropdown-item"
+                      onClick={() => navigate("menuItem/menuItemlist")}
+                    >
+                      Menu Items
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      className="dropdown-item"
+                      onClick={() => navigate("order/myOrders")}
+                    >
+                      My Orders
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      className="dropdown-item"
+                      onClick={() => navigate("order/allOrders")}
+                    >
+                      All Orders
+                    </a>
+                  </li>
+                </ul>
+              </li>
+            ) : (
+              <></>
+            )}
+          </ul>
+          <ul className="navbar-nav ms-auto align-items-center">
+            <NavLink
+              className="nav-link me-3"
+              style={{ color: "#2a2b59" }}
+              aria-current="page"
+              to="/shoppingCart"
+            >
+              <span className="bi bi-cart fs-4  d-flex align-items-center">
+                <span className="fs-6">
+                  {" "}
+                  {shoppingCartFromStore.length
+                    ? `(${shoppingCartFromStore.length})`
+                    : ""}
+                </span>
+              </span>
+            </NavLink>
+            {userData.id ? (
+              <li className="nav-item dropdown" style={{ listStyle: "none" }}>
+                <a
+                  className="nav-link dropdown-toggle d-flex align-items-center"
+                  href="#"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  <i className="fs-4 bi bi-person-circle me-1"></i>
+                  {userData.fullName?.split(" ")[0]}!
+                </a>
+                <ul className="dropdown-menu">
+                  <li>
+                    <NavLink className="dropdown-item" to="/order/myOrders">
+                      My Orders
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink className="dropdown-item" to="/myprofile">
+                      My Profile
+                    </NavLink>
+                  </li>
+                  <li>
+                    <button className="dropdown-item" onClick={handleLogout}>
+                      Logout
+                    </button>
+                  </li>
+                </ul>
+              </li>
+            ) : (
+              <li
+                style={{ listStyle: "none" }}
+                className="text-dark nav-item dropdown"
               >
-                Admin
-              </a>
-              <ul className="dropdown-menu">
-                <li>
-                  <a className="dropdown-item" href="#">
-                    Action
-                  </a>
-                </li>
-                <li>
-                  <a className="dropdown-item" href="#">
-                    Another action
-                  </a>
-                </li>
-                <li>
-                  <a className="dropdown-item" href="#">
-                    Something else here
-                  </a>
-                </li>
-              </ul>
-            </li>
+                <a
+                  className="nav-link dropdown-toggle"
+                  href="#"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  My Account
+                </a>
+                <ul className="dropdown-menu">
+                  <li>
+                    <NavLink className="dropdown-item" to="/login">
+                      Login
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink className="dropdown-item" to="/register">
+                      Register
+                    </NavLink>
+                  </li>
+                </ul>
+              </li>
+            )}
           </ul>
         </div>
-        <form className="d-flex me-5" role="search">
-          <input
-            style={{ height: "35px" }}
-            className="form-control me-2"
-            type="search"
-            placeholder="Search"
-            aria-label="Search"
-          ></input>
-          <button
-            className="btn btn-outline-warning"
-            style={{ color: "#2a2b59", height: "35px" }}
-            type="submit"
-          >
-            Search
-          </button>
-        </form>
-
-        <NavLink
-          className="nav-link me-5"
-          style={{ color: "#2a2b59" }}
-          aria-current="page"
-          to="/shoppingCart"
-        >
-          <span className="bi bi-cart fs-4">
-            <span className="fs-6">
-              {" "}
-              {shoppingCartFromStore.length
-                ? `(${shoppingCartFromStore.length})`
-                : ""}
-            </span>
-          </span>
-        </NavLink>
-        <li
-          style={{ listStyle: "none" }}
-          className="text-dark nav-item dropdown"
-        >
-          <a
-            className="nav-link dropdown-toggle"
-            href="#"
-            role="button"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
-            My Account
-          </a>
-          <ul className="dropdown-menu">
-            <li>
-              <NavLink className="dropdown-item" to="/login">
-                Login
-              </NavLink>
-            </li>
-            <li>
-              <NavLink className="dropdown-item" to="/register">
-                Register
-              </NavLink>
-            </li>
-          </ul>
-        </li>
       </div>
     </nav>
   );

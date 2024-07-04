@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { cartItemModel } from "../../../../Interfaces";
+import { apiResponse, cartItemModel, userModel } from "../../../../Interfaces";
 import { RootState } from "../../../../Storage/Redux/store";
 import cartImage from "../../../../assets/Images/empty-cart.png";
 import {
@@ -9,23 +9,39 @@ import {
 } from "../../../../Storage/Redux/shoppingCartSlice";
 import { useUpdateShoppingCartMutation } from "../../../../Apis/shoppingCartApi";
 import { inputHelper } from "../../../../Helper";
+import { useInitialPaymentMutation } from "../../../../Apis/paymentApi";
+import { useNavigate } from "react-router";
 
 function CartSummary() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const [updateShoppingCart] = useUpdateShoppingCartMutation();
   const shoppingCartFromStore: cartItemModel[] = useSelector(
     (state: RootState) => state.shoppingCartStore.cartItems ?? []
   );
+  const userData: userModel = useSelector(
+    (state: RootState) => state.userAuthStore
+  );
+  const [initiatePayment] = useInitialPaymentMutation();
 
   let grandTotal = 0;
   let totalItems = 0;
 
   const initialUserData = {
-    name: "",
-    email: "",
+    name: userData.fullName,
+    email: userData.email,
     phoneNumber: "",
   };
+
+  useEffect(() => {
+    setUserInput({
+      name: userData.fullName,
+      email: userData.email,
+      phoneNumber: "",
+    });
+  });
+
   const [userInput, setUserInput] = useState(initialUserData);
 
   const handleUserInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -61,16 +77,14 @@ function CartSummary() {
       updateShoppingCart({
         menuItemId: cartItem.menuItem?.id,
         updateQuantityBy: 0,
-        userId: "b2c68514-d7f8-48e9-9769-501cc703a285",
+        userId: userData.id,
       });
       dispatch(removeFromCart({ cartItem, quantity: 0 }));
     } else {
-      console.log(updateQuantityBy);
-      console.log(cartItem);
       updateShoppingCart({
         menuItemId: cartItem.menuItem?.id,
         updateQuantityBy: updateQuantityBy,
-        userId: "b2c68514-d7f8-48e9-9769-501cc703a285",
+        userId: userData.id,
       });
       dispatch(
         updateQuantity({
@@ -80,9 +94,16 @@ function CartSummary() {
       );
     }
   };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
+
+    const { data }: apiResponse = await initiatePayment(userData.id);
+    const orderSummary = { grandTotal, totalItems };
+    navigate("/payment", {
+      state: { apiResult: data?.result, userInput },
+    });
   };
 
   return (

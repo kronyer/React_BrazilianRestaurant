@@ -5,16 +5,22 @@ import { useNavigate } from "react-router";
 import { useGetMenuItemByIdQuery } from "../../../Apis/menuItemApi";
 import { useUpdateShoppingCartMutation } from "../../../Apis/shoppingCartApi";
 import { MainLoader } from "./Common";
+import { toastNotify } from "../../../Helper";
+import { userModel } from "../../../Interfaces";
+import { useSelector } from "react-redux";
+import { RootState } from "@reduxjs/toolkit/query";
 
 function MenuItemDetails() {
   const navigate = useNavigate();
   const [imageUrl, setImageUrl] = useState("");
   const { menuItemId } = useParams();
-  //console.log(menuItemId)
   const { data, isLoading } = useGetMenuItemByIdQuery(menuItemId);
   const [quantity, setQuantity] = useState(1);
   const [isAddingToCart, setIsAddingToCart] = useState<boolean>(false);
   const [updateShoppingCart] = useUpdateShoppingCartMutation();
+  const userData: userModel = useSelector(
+    (state: RootState) => state.userAuthStore
+  );
 
   useEffect(() => {
     const fetchImage = async () => {
@@ -23,7 +29,7 @@ function MenuItemDetails() {
         const data = await response.json();
         setImageUrl(data.image);
       } catch (error) {
-        console.log(error);
+        error;
       }
     };
     fetchImage();
@@ -41,14 +47,20 @@ function MenuItemDetails() {
   };
 
   const handleAddToCart = async (menuItemId: number) => {
+    if (!userData.id) {
+      navigate("/login");
+      return;
+    }
     setIsAddingToCart(true);
 
     const response = await updateShoppingCart({
       menuItemId: menuItemId,
       updateQuantityBy: quantity,
-      userId: "b2c68514-d7f8-48e9-9769-501cc703a285",
+      userId: userData.id,
     });
-    console.log(response);
+    if (response.data && response.data.isSuccess) {
+      toastNotify("Item Added To Cart");
+    }
     setIsAddingToCart(false);
   };
 
@@ -57,7 +69,7 @@ function MenuItemDetails() {
       {!isLoading ? (
         <div className="row justify-content-center">
           <div className="col-12 col-md-4">
-            <h1>
+            <h1 className="d-flex align-items-center">
               <i
                 onClick={() => navigate(-1)}
                 className="btn btn-outline-secondary me-3 bi bi-arrow-left-short"

@@ -1,14 +1,40 @@
 import React, { useState } from "react";
-import { inputHelper } from "../../../Helper";
+import { inputHelper, toastNotify } from "../../../Helper";
+import { useRegisterUserMutation } from "../../../Apis/authApi";
+import { apiResponse } from "../../../Interfaces";
+import { useNavigate } from "react-router";
 
 function Register() {
+  const [registerUser] = useRegisterUserMutation();
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
   const [userInput, setUserInput] = useState({
     userName: "",
     password: "",
     role: "",
     name: "",
   });
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setLoading(true);
+
+    const response: apiResponse = await registerUser({
+      userName: userInput.userName,
+      password: userInput.password,
+      role: userInput.role,
+      name: userInput.name,
+    });
+
+    setLoading(false);
+
+    if (response.data) {
+      toastNotify("Registration successful");
+      navigate("/login");
+    } else if (response.error) {
+      toastNotify(response.error.data.errorMessages[0], "error");
+    }
+  };
 
   const handleUserInput = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -24,7 +50,7 @@ function Register() {
       <div className=" text-secondary col-8 col-md-4">
         <h2 className="text-dark">Register New Account</h2>
         <hr></hr>
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className="form-floating mb-3">
             <input
               type="text"
@@ -79,9 +105,19 @@ function Register() {
             <label>Role</label>
           </div>
           <div className="text-center mt-3">
-            <button className="text-center btn-lg btn btn-dark">
-              Register
-            </button>
+            {loading ? (
+              <button disabled className="text-center btn-lg btn btn-dark">
+                <span
+                  className="spinner-border spinner-border-sm"
+                  aria-hidden="true"
+                ></span>
+                <span> Proccesing...</span>
+              </button>
+            ) : (
+              <button className="text-center btn-lg btn btn-dark">
+                Register
+              </button>
+            )}
           </div>
         </form>
       </div>

@@ -13,8 +13,8 @@ const authApi = createApi({
         method: "POST",
         headers: {
           "Content-type": "application/json",
-          body: userData,
         },
+        body: userData,
       }),
     }),
     loginUser: builder.mutation({
@@ -23,8 +23,8 @@ const authApi = createApi({
         method: "POST",
         headers: {
           "Content-type": "application/json",
-          body: userCredentials,
         },
+        body: userCredentials,
       }),
     }),
   }),
