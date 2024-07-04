@@ -33,12 +33,14 @@ function Header() {
       style={{
         backgroundColor: "whitesmoke",
         boxShadow: "0px 3px 7px #eeeeee",
+        fontSize: "1.1em",
+        fontWeight: "normal",
       }}
     >
       <div className="container-fluid col-10">
-        <NavLink className="navbar-brand ps-2" to="/">
+        <a className="navbar-brand ps-2" href="/">
           <img src={logo} alt="logo" height={"50px"}></img>
-        </NavLink>
+        </a>
         <button
           className="navbar-toggler"
           type="button"
@@ -53,7 +55,7 @@ function Header() {
         <div className="collapse navbar-collapse" id="navbarNavDropdown">
           <ul className="navbar-nav">
             <li className="nav-item">
-              <NavLink className="nav-link" aria-current="page" to="/">
+              <NavLink className="nav-link mx-3" aria-current="page" to="/">
                 Home
               </NavLink>
             </li>
@@ -61,6 +63,7 @@ function Header() {
               <li className="nav-item dropdown">
                 <a
                   className="nav-link dropdown-toggle"
+                  style={{ color: "#2a2b59" }}
                   href="#"
                   role="button"
                   data-bs-toggle="dropdown"
@@ -116,9 +119,13 @@ function Header() {
               </span>
             </NavLink>
             {userData.id ? (
-              <li className="nav-item dropdown" style={{ listStyle: "none" }}>
+              <li
+                className="nav-item dropdown"
+                style={{ listStyle: "none", color: "#2a2b59" }}
+              >
                 <a
                   className="nav-link dropdown-toggle d-flex align-items-center"
+                  style={{ color: "#2a2b59" }}
                   href="#"
                   role="button"
                   data-bs-toggle="dropdown"
@@ -129,17 +136,29 @@ function Header() {
                 </a>
                 <ul className="dropdown-menu">
                   <li>
-                    <NavLink className="dropdown-item" to="/order/myOrders">
+                    <NavLink
+                      className="dropdown-item"
+                      to="/order/myOrders"
+                      style={{ color: "#2a2b59" }}
+                    >
                       My Orders
                     </NavLink>
                   </li>
                   <li>
-                    <NavLink className="dropdown-item" to="/myprofile">
+                    <NavLink
+                      className="dropdown-item"
+                      to="/myprofile"
+                      style={{ color: "#2a2b59" }}
+                    >
                       My Profile
                     </NavLink>
                   </li>
                   <li>
-                    <button className="dropdown-item" onClick={handleLogout}>
+                    <button
+                      className="dropdown-item"
+                      onClick={handleLogout}
+                      style={{ color: "#2a2b59" }}
+                    >
                       Logout
                     </button>
                   </li>
@@ -156,17 +175,26 @@ function Header() {
                   role="button"
                   data-bs-toggle="dropdown"
                   aria-expanded="false"
+                  style={{ color: "#2a2b59" }}
                 >
                   My Account
                 </a>
                 <ul className="dropdown-menu">
                   <li>
-                    <NavLink className="dropdown-item" to="/login">
+                    <NavLink
+                      className="dropdown-item"
+                      to="/login"
+                      style={{ color: "#2a2b59" }}
+                    >
                       Login
                     </NavLink>
                   </li>
                   <li>
-                    <NavLink className="dropdown-item" to="/register">
+                    <NavLink
+                      className="dropdown-item"
+                      to="/register"
+                      style={{ color: "#2a2b59" }}
+                    >
                       Register
                     </NavLink>
                   </li>

@@ -17,7 +17,7 @@ function OrderDetails() {
     userInput = {
       name: data.result[0].pickupName,
       email: data.result[0].pickupEmail,
-      phoneNumber: data.result[0].PickupPhoneNumber,
+      phoneNumber: data.result[0].pickupPhoneNumber,
     };
     orderDetails = {
       id: data.result[0].orderHeaderId,

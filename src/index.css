@@ -42,3 +42,10 @@
   background-color: #ffb900;
   color: white;
 }
+
+.nav-link.active {
+  color: #2a2b59; /* Cor do texto */
+  box-shadow: inset 0 -3px 0 #2a2b59; /* Altura do deslocamento do efeito */
+  font-weight: bold; /* Fonte em negrito */
+  /* Adicione outros estilos desejados para o link ativo */
+}

@@ -40,7 +40,7 @@ function CartSummary() {
       email: userData.email,
       phoneNumber: "",
     });
-  });
+  }, [userData]);
 
   const [userInput, setUserInput] = useState(initialUserData);
 

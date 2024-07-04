@@ -51,13 +51,11 @@ function OrderSummary({ data, userInput }: orderSummaryProps) {
       {!loading && (
         <>
           <div className="d-flex align-items-center justify-content-between">
-            <h2>Order Detail</h2>
             <span className={`btn btn-outline-${statusColor}`}>
               {data.status}
             </span>
           </div>
-          <hr></hr>
-          <ul className="list-group justify-content-center mt-4">
+          <ul className="list-group justify-content-center mt-2">
             <li className="list-group-item">Name: {userInput.name} </li>
             <li className="list-group-item">Email: {userInput.email}</li>
             <li className="list-group-item">Phone: {userInput.phoneNumber} </li>
