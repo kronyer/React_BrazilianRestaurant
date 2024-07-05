@@ -16,7 +16,14 @@ function OrderList({ isLoading, orderData }: OrderListProps) {
         <div className="container mt-5">
           <div className="row justify-content-center">
             <div className="col-10 col-md-6">
-              <h2 className="text-center">My Orders</h2>
+              <h2 className="text-center">
+                <i
+                  onClick={() => navigate(-1)}
+                  className="btn btn-outline-secondary me-3 bi bi-arrow-left-short"
+                  style={{ borderRadius: "50%" }}
+                ></i>
+                My Orders
+              </h2>
               <hr></hr>
               {orderData.length > 0 ? (
                 orderData.map((orderItem: orderHeaderModel, index) => {

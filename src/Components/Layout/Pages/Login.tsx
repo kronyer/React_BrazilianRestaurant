@@ -56,10 +56,7 @@ function Login() {
     }
   };
   return (
-    <div
-      className="row justify-content-center text-center mt-5"
-      style={{ height: "70vh" }}
-    >
+    <div className="row justify-content-center text-center mt-5">
       <div className="col-10 col-md-4">
         <h2>Login</h2>
         {error && <p className="text-danger">{error}</p>}
@@ -89,17 +86,27 @@ function Login() {
             ></input>
             <label>Password</label>
           </div>
-          {loading ? (
-            <button className="btn btn-dark" disabled>
-              <span
-                className="spinner-border spinner-border-sm"
-                aria-hidden="true"
-              ></span>
-              <span> LoginIn...</span>
-            </button>
-          ) : (
-            <button className="btn btn-dark">Login</button>
-          )}
+          <div className="row text-center justify-content-center">
+            <div className="col-6">
+              {loading ? (
+                <button className="btn btn-dark mx-2" disabled>
+                  <span
+                    className="spinner-border spinner-border-sm"
+                    aria-hidden="true"
+                  ></span>
+                  <span> LoginIn...</span>
+                </button>
+              ) : (
+                <button className="btn btn-dark mx-2">Login</button>
+              )}
+              <button
+                onClick={() => navigate("/register")}
+                className="btn-outline-dark btn mx-2"
+              >
+                Register
+              </button>
+            </div>
+          </div>
         </form>
       </div>
     </div>

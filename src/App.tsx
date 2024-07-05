@@ -56,7 +56,10 @@ function App() {
   }, [userData]);
 
   return (
-    <div className="text-dark App" style={{ overflowX: "hidden" }}>
+    <div
+      className="text-dark App"
+      style={{ overflowX: "hidden", position: "relative", minHeight: "100vh" }}
+    >
       <Header></Header>
       <div className="pb-5">
         <Routes>

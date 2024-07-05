@@ -67,15 +67,15 @@ function MenuItemDetails() {
   };
 
   return (
-    <div className="container mt-5 text-dark" style={{ minHeight: "100vh" }}>
+    <div className="container mt-5 text-dark">
       {!isLoading ? (
         <div className="row justify-content-center">
           <div className="col-12 col-md-4">
             <h1 className="d-flex align-items-center">
               <i
                 onClick={() => navigate(-1)}
-                className="btn btn-outline-secondary me-3 bi bi-arrow-left-short"
-                style={{ borderRadius: "50%" }}
+                className="btn text-center justify-content-center align-items-center btn-outline-secondary me-3 bi bi-arrow-left-short"
+                style={{ borderRadius: "50%", width: "40px", height: "40px" }}
               ></i>
               {data.result?.name}
             </h1>
@@ -154,7 +154,7 @@ function MenuItemDetails() {
             <img
               className="image"
               width={"100%"}
-              src="https://placehold.co/350x500"
+              src="https://placehold.co/350x400"
             ></img>
           </div>
         </div>

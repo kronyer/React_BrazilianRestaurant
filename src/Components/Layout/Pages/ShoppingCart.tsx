@@ -4,7 +4,7 @@ import { withAuth } from "../../../HOC";
 
 function ShoppingCart() {
   return (
-    <div style={{ overflowX: "hidden", minHeight: "100vh" }}>
+    <div style={{ overflowX: "hidden" }}>
       <CartSummary></CartSummary>
     </div>
   );

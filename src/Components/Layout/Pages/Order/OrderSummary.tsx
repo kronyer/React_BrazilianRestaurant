@@ -94,10 +94,11 @@ function OrderSummary({ data, userInput }: orderSummaryProps) {
             {userData.role == "admin" && (
               <div>
                 {data.status! !== "Cancelled" &&
-                  data.status! !== "Completed" && (
+                  data.status! !== "Completed" &&
+                  data.status && (
                     <button
                       className="btn btn-danger mx-2"
-                      onClick={handleCancel}
+                      onClick={() => console.log(data.status)}
                     >
                       Cancel
                     </button>

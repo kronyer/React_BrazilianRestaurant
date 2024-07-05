@@ -109,7 +109,14 @@ function CartSummary() {
   return (
     <div className="mt-5 row justify-content-center text-dark">
       <div className="col-5 col-md-4">
-        <h2 className="text-center">Order summary</h2>
+        <h2 className="text-center">
+          <i
+            onClick={() => navigate(-1)}
+            className="btn btn-outline-secondary me-3 bi bi-arrow-left-short"
+            style={{ borderRadius: "50%" }}
+          ></i>
+          Order summary
+        </h2>
         <hr></hr>
         <ul className="list-group">
           {shoppingCartFromStore.map(
@@ -136,20 +143,14 @@ function CartSummary() {
                       <div className="col-10 col-md-6">
                         <div className="d-flex justify-content-between">
                           <div className="d-flex justify-content-between p-2 mt-2 rounded-pill custom-card-shadow">
-                            <span
-                              role="button"
-                              onClick={() => handleQuantity(-1, cartItem)}
-                            >
+                            <span role="button">
                               <i
                                 onClick={() => handleQuantity(-1, cartItem)}
                                 className="bi bi-dash-circle-fill"
                               ></i>
                             </span>
                             <span className="mx-2">{cartItem.quantity}</span>
-                            <span
-                              role="button"
-                              onClick={() => handleQuantity(1, cartItem)}
-                            >
+                            <span role="button">
                               <i
                                 onClick={() => handleQuantity(+1, cartItem)}
                                 className="bi bi-plus-circle-fill"
@@ -215,7 +216,7 @@ function CartSummary() {
             ></input>
           </div>
           <div className="border p-4 text-center rounded">
-            <p className="fw-bold">Total - ${grandTotal}</p>
+            <p className="fw-bold">Total - ${grandTotal.toFixed(2)}</p>
             <p className="fw-semibold mt-0">{totalItems} item(s)</p>
           </div>
           <div className="text-center mt-3">

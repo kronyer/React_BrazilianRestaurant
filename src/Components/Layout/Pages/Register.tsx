@@ -43,10 +43,7 @@ function Register() {
     setUserInput(tempData);
   };
   return (
-    <div
-      style={{ height: "100vh" }}
-      className="mt-5 text-dark row justify-content-center"
-    >
+    <div className="mt-5 text-dark row justify-content-center">
       <div className=" text-secondary col-8 col-md-4">
         <h2 className="text-dark">Register New Account</h2>
         <hr></hr>
@@ -100,7 +97,7 @@ function Register() {
             >
               <option value={""}>--Select Role--</option>
               <option value="customer">Customer</option>
-              <option value="admin">Admine</option>
+              <option value="admin">Admin</option>
             </select>
             <label>Role</label>
           </div>
